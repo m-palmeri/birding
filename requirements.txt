@@ -1,3 +1,4 @@
 requests
-pydub
 pandas
+pydub
+pyaudioop; python_version>='3.13'
