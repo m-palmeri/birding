@@ -1,26 +1,52 @@
-# Anki Pipelines (Split)
+# Photo Fetcher → Visual Pipeline
 
-Scripts:
-- `utils.py` — shared helpers (download, time parsing, filenames)
-- `audio.py` — audio pipeline, trims & exports Anki CSV
-- `visual.py` — photo pipeline, exports Anki CSV
+This fetcher pulls Macaulay Library **photo ML_IDs** per species for visual ID practice,
+then you feed the output (`photos.csv`) into your existing `visual.py` to download files and build Anki CSV.
 
-## Inputs
-- **audio**: CSV with `ML_ID, Species, ClipStart, ClipEnd, Tags`
-- **visual**: CSV with `ML_ID, Species, Tags`
+## Files
+- `fetch_photos.py` — reads `fetch_specs.csv`, writes `photos.csv`
 
-## Outputs
-Both write: `Front, Back, Media, Species, ML, Tags`
-- Audio → `Media = [sound:...]`
-- Visual → `Media = <img src="...">` and the image also appears on the Front.
-
-## Usage
+## Install
 ```bash
-# Audio
-python audio.py --input audio.csv --out_dir ./out_audio --media_dir ./out_audio/media
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-# Visual
+## Input format: `fetch_specs.csv`
+Required:
+- `Species` — common or scientific name
+- `Limit` — how many ML_IDs to sample
+
+Optional:
+- `Tags` — space-separated (carried into output)
+- `Region` — e.g., `US-TN`, `US`
+- `Months` — e.g., `11-02` or `11,12,1`
+- `MinRating` — e.g., `3.5` or `4`
+- `MaxPerObserver` — e.g., `2`
+- `LowQualityFrac` — e.g., `0.3`
+
+### Example
+```
+Species,Limit,Tags,Region,Months,MinRating,MaxPerObserver,LowQualityFrac
+Greater Scaup,15,"Scaup photo winter comparison",US-TN,11-02,3.5,2,0.35
+Lesser Scaup,15,"Scaup photo winter comparison",US-TN,11-02,3.5,2,0.35
+```
+
+## Run
+```bash
+# Dry-run just to see counts:
+python fetch_photos.py --input fetch_specs.csv --out photos.csv --mode json --pages 5 --seed 42 --dry-run
+
+# Produce photos.csv:
+python fetch_photos.py --input fetch_specs.csv --out photos.csv --mode json --pages 5 --seed 42
+# (If JSON mode yields nothing, try --mode html)
+```
+
+## Next step
+Use the output with your existing visual pipeline:
+```bash
 python visual.py --input photos.csv --out_dir ./out_visual --media_dir ./out_visual/media
 ```
-Make sure your media ends up in Anki's `collection.media`.
-Enable **Allow HTML in fields** when importing.
+
+**Import into Anki** with HTML enabled, make sure images end up in `collection.media`.
