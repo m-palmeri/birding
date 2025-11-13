@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, csv
+import argparse, csv, os
 from pathlib import Path
 import pandas as pd
 from utils import ensure_dir, download_asset, build_filename
@@ -8,8 +8,8 @@ from utils import ensure_dir, download_asset, build_filename
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", required=True)
-    ap.add_argument("--out_dir", required=True)
-    ap.add_argument("--media_dir", required=True)
+    ap.add_argument("--out_dir", default = "./out")
+    ap.add_argument("--media_dir", default = os.path.expanduser("~/Library/Application Support/Anki2/User 1/collection.media"))
     ap.add_argument("--delay", type=float, default=0.5)
     args = ap.parse_args()
 
@@ -44,10 +44,9 @@ def main():
             try: tmp_path.unlink(missing_ok=True)
             except Exception: pass
 
-        img_tag = f'<img src="{final_name}">'
-        front = f'What is this bird?<br>{img_tag}'
+        front = 'What is this bird?'
         back = f"{species}"
-        rows.append({"Front": front, "Back": back, "Media": img_tag, "Species": species, "ML": f"ML{mlid}", "Tags": tags})
+        rows.append({"Front": front, "Back": back, "Media": final_name, "Species": species, "ML": f"ML{mlid}", "Tags": tags})
 
     out_csv = out_dir / "anki_import_visual.csv"
     with open(out_csv, "w", newline="", encoding="utf-8") as f:

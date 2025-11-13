@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, csv
+import argparse, csv, os
 from pathlib import Path
 from typing import Optional
 # audioop shim for Python 3.13
@@ -33,8 +33,8 @@ def export_audio(src_path: Path, dest_path: Path, clip_start_ms: Optional[int], 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", required=True)
-    ap.add_argument("--out_dir", required=True)
-    ap.add_argument("--media_dir", required=True)
+    ap.add_argument("--out_dir", default = "./out")
+    ap.add_argument("--media_dir", default = os.path.expanduser("~/Library/Application Support/Anki2/User 1/collection.media"))
     ap.add_argument("--delay", type=float, default=0.5)
     args = ap.parse_args()
 

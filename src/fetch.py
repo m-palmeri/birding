@@ -2,7 +2,7 @@
 from __future__ import annotations
 import argparse, asyncio, json, random, re, sys, time
 from pathlib import Path
-from typing import Set, List
+from typing import Set, List, Optional
 
 import pandas as pd
 from playwright.async_api import async_playwright
@@ -11,9 +11,16 @@ import traceback
 CATALOG_BASE = "https://media.ebird.org/catalog"
 ASSET_ID_RE = re.compile(r"/asset/(\d+)")
 
-def build_catalog_url(taxon_code: str) -> str:
+def build_catalog_url(taxon_code: str, extra_qs: Optional[str] = None) -> str:
     base = f"https://media.ebird.org/catalog?taxonCode={taxon_code}&mediaType=photo&view=grid&sort=rating_rank_desc"
     # initial cache-buster
+    if extra_qs:
+        if extra_qs.startswith("&"):
+            base += extra_qs
+        elif extra_qs.startswith("?"):
+            base += "&" + extra_qs[1:]
+        else:
+            base += "&" + extra_qs
     base += f"&_cb={int(time.time()*1000)}"
     return base
 
@@ -147,7 +154,8 @@ async def gather_for_taxon(
     pages: int,                # you can keep passing this; we’ll translate to a click count
     headful: bool,
     slowmo: int,
-    timeout_ms: int
+    timeout_ms: int,
+    extra_qs: Optional[str]
 ) -> list[str]:
     # Treat `pages` as a rough proxy for "how deep to load"; tune 2x if needed
     max_clicks = max(3, pages)          # e.g., pages=10 -> up to 10 "More" clicks
@@ -162,7 +170,7 @@ async def gather_for_taxon(
     page = await context.new_page()
 
     try:
-        url = build_catalog_url(taxon_code)
+        url = build_catalog_url(taxon_code, extra_qs)
         await page.goto(str(url))
         await page.wait_for_load_state("domcontentloaded", timeout=int(timeout_ms))
         await wait_for_grid(page, timeout_ms=int(timeout_ms))
@@ -185,19 +193,6 @@ async def gather_for_taxon(
         await context.close()
         await browser.close()
 
-def load_cache(cache_dir: Path, code: str) -> Set[str]:
-    p = cache_dir / f"{code}.json"
-    if p.exists():
-        try:
-            return set(str(x) for x in json.loads(p.read_text(encoding="utf-8")))
-        except Exception:
-            return set()
-    return set()
-
-def save_cache(cache_dir: Path, code: str, ids: Set[str]) -> None:
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    (cache_dir / f"{code}.json").write_text(json.dumps(sorted(list(ids))), encoding="utf-8")
-
 def sample_ids(all_ids: List[str], k: int, rng: random.Random) -> List[str]:
     if k >= len(all_ids): return list(all_ids)
     return rng.sample(all_ids, k)
@@ -219,20 +214,16 @@ async def main_async(args) -> int:
             code = str(row["TaxonCode"]).strip()
             limit = int(row["Limit"])
             tags = str(row["Tags"]).strip()
+            extra_qs = str(row["QueryParams"]).strip() or None
             print(f"\n== {species} ({code}) pages={args.pages} limit={limit} ==")
-            cached = load_cache(cache_dir, code)
-            print(f"Cache has {len(cached)} ids")
-            fresh_ids = await gather_for_taxon(play, code, args.pages, args.headful, args.slowmo, args.timeout)
-            print(f"Fetched {len(fresh_ids)} ids this run")
-            all_ids = cached.union(set(fresh_ids))
-            print(f"Total pooled ids = {len(all_ids)}")
+            all_ids = await gather_for_taxon(play, code, args.pages, args.headful, args.slowmo, args.timeout, extra_qs)
+            print(f"Fetched {len(all_ids)} ids this run")
             if not all_ids:
                 print("No IDs found; skipping.")
                 continue
             picks = sample_ids(list(all_ids), limit, rng)
             for mlid in picks:
                 out_rows.append({"ML_ID": mlid, "Species": species, "Tags": tags})
-            save_cache(cache_dir, code, all_ids)
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     import csv as _csv
