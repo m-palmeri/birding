@@ -1,2 +1,2 @@
-Species,TaxonCode,Limit,Tags,Region,Months,MinRating,MaxPerObserver,LowQualityFrac,Notes
-,,,,,,,,,
+Species,TaxonCode,Limit,Tags,QueryParams
+,,,,

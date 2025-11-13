@@ -1,0 +1,27 @@
+Species,TaxonCode,Limit,Tags,QueryParams
+Black-Bellied Whistling-Duck,bbwduc,10,Ducks photo flying,tag=flying_flight
+Fulvous Whistling-Duck,fuwduc,5,Ducks photo flying,tag=flying_flight
+Wood Duck,wooduc,15,Ducks photo flying,tag=flying_flight
+Mallard,mallar3,15,Ducks photo flying,tag=flying_flight
+American Black Duck,ambduc,10,Ducks photo flying,tag=flying_flight
+Gadwall,gadwal,15,Ducks photo flying,tag=flying_flight
+Green-Winged Teal,gnwtea,15,Ducks photo flying,tag=flying_flight
+Blue-Winged Teal,buwtea,15,Ducks photo flying,tag=flying_flight
+American Wigeon,amewig,10,Ducks photo flying,tag=flying_flight
+Northern Pintail,norpin,10,Ducks photo flying,tag=flying_flight
+Northern Shoveler,norsho,10,Ducks photo flying,tag=flying_flight
+Canvasback,canvas,10,Ducks photo flying,tag=flying_flight
+Redhead,redhea,10,Ducks photo flying,tag=flying_flight
+Ring-Necked Duck,rinduc,10,Ducks photo flying,tag=flying_flight
+Greater Scaup,gresca,12,Ducks photo flying,tag=flying_flight
+Lesser Scaup,lessca,12,Ducks photo flying,tag=flying_flight
+Long-Tailed Duck,lotduc,8,Ducks photo flying,tag=flying_flight
+Black Scoter,blksco2,8,Ducks photo flying,tag=flying_flight
+Surf Scoter,sursco,8,Ducks photo flying,tag=flying_flight
+White-Winged Scoter,whwsco2,8,Ducks photo flying,tag=flying_flight
+Bufflehead,buffle,12,Ducks photo flying,tag=flying_flight
+Common Goldeneye,comgol,12,Ducks photo flying,tag=flying_flight
+Common Merganser,commer,10,Ducks photo flying,tag=flying_flight
+Hooded Merganser,hoomer,15,Ducks photo flying,tag=flying_flight
+Red-Breasted Merganser,rebmer,10,Ducks photo flying,tag=flying_flight
+Ruddy Duck,rudduc,12,Ducks photo flying,tag=flying_flight
