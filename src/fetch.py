@@ -240,7 +240,6 @@ def build_argparser():
     ap.add_argument("--input", required=True)
     ap.add_argument("--out", default="photos.csv")
     ap.add_argument("--pages", type=int, default=10)
-    ap.add_argument("--cache-dir", default="./.cache_mlac_ids")
     ap.add_argument("--headful", action="store_true")
     ap.add_argument("--slowmo", type=int, default=0)
     ap.add_argument("--seed", type=int, default=42)
