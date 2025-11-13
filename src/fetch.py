@@ -206,7 +206,6 @@ async def main_async(args) -> int:
     if "Tags" not in df.columns: df["Tags"] = ""
     if "QueryParams" not in df.columns: df["QueryParams"] = ""
     out_rows = []
-    cache_dir = Path(args.cache_dir)
     rng = random.Random(args.seed)
     async with async_playwright() as play:
         for _, row in df.iterrows():

@@ -1,0 +1,21 @@
+Species,TaxonCode,Limit,Tags,QueryParams
+Mallard,mallar3,20,Ducks photo female,sex=female
+American Black Duck,ambduc,20,Ducks photo,
+Mottled Duck,motduc,20,Ducks photo,
+Mexican Duck,mexduc,20,Ducks photo,
+Gadwall,gadwal,20,Ducks photo,
+Green-Winged Teal,gnwtea,20,Ducks photo female,sex=female
+Blue-Winged Teal,buwtea,20,Ducks photo female,sex=female
+Cinnamon Teal,cintea,20,Ducks photo female,sex=female
+American Wigeon,amewig,20,Ducks photo female,sex=female
+Northern Pintail,norpin,20,Ducks photo female,sex=female
+Canvasback,canvas,20,Ducks photo female,sex=female
+Redhead,redhea,20,Ducks photo female,sex=female
+Ring-Necked Duck,rinduc,20,Ducks photo female,sex=female
+Greater Scaup,gresca,20,Ducks photo female,sex=female
+Lesser Scaup,lessca,20,Ducks photo female,sex=female
+Harlequin Duck,harduc,20,Ducks photo female,sex=female
+Surf Scoter,sursco,20,Ducks photo female,sex=female
+White-Winged Scoter,whwsco2,20,Ducks photo female,sex=female
+Black Scoter,blksco2,20,Ducks photo female,sex=female
+Ruddy Duck,rudduc,20,Ducks photo female,sex=female
