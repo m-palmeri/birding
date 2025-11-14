@@ -1,0 +1,5 @@
+Species,TaxonCode,Limit,Tags,QueryParams
+Mallard,mallar3,50,Ducks photo female,sex=female
+Mottled Duck,motduc,50,Ducks photo,
+American Black Duck,ambduc,50,Ducks photo,
+Mexican Duck,mexduc,50,Ducks photo,
