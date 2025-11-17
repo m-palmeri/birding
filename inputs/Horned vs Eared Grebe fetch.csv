@@ -1,3 +1,3 @@
 Species,TaxonCode,Limit,Tags,QueryParams
-Horned Grebe,horgre,50,Grebes photo,beginMonth=11&endMonth=2
-Eared Grebe,eargre,50,Grebes photo,beginMonth=11&endMonth=2
+Horned Grebe,horgre,50,Grebes photo,beginMonth=11&endMonth=2&regionCode=US
+Eared Grebe,eargre,50,Grebes photo,beginMonth=11&endMonth=2&regionCode=US
