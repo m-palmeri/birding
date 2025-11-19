@@ -12,7 +12,7 @@ CATALOG_BASE = "https://media.ebird.org/catalog"
 ASSET_ID_RE = re.compile(r"/asset/(\d+)")
 
 def build_catalog_url(taxon_code: str, extra_qs: Optional[str] = None) -> str:
-    base = f"https://media.ebird.org/catalog?taxonCode={taxon_code}&mediaType=photo&view=grid&sort=obs_date_desc"
+    base = f"https://media.ebird.org/catalog?taxonCode={taxon_code}&mediaType=photo&view=grid&sort=rating_rank_desc"
     # initial cache-buster
     if extra_qs:
         if extra_qs.startswith("&"):

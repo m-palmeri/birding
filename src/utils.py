@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import re, time
+import re, time, math
 from pathlib import Path
 from typing import Optional
 import requests
@@ -19,6 +19,8 @@ def clean_name(s: str) -> str:
 
 def parse_time_to_ms(s: str | float | int | None) -> Optional[int]:
     if s is None: return None
+    if isinstance(s, float) and math.isnan(s):
+        return None
     if isinstance(s, (int, float)): return int(float(s) * 1000)
     s = str(s).strip()
     if not s: return None
