@@ -1,0 +1,5 @@
+Species,TaxonCode,Limit,Tags,QueryParams
+Eastern Meadowlark,easmea,50,Meadowlark photo,sort=rating_rank_desc&beginMonth=11&endMonth=2
+Western Meadowlark,wesmea,50,Meadowlark photo,sort=rating_rank_desc&beginMonth=11&endMonth=2
+Eastern Meadowlark,easmea,50,Meadowlark photo,sort=obs_date_desc&beginMonth=11&endMonth=2
+Western Meadowlark,wesmea,50,Meadowlark photo,sort=obs_date_desc&beginMonth=11&endMonth=2
